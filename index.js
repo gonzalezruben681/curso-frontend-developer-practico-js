@@ -1,15 +1,19 @@
 const menuEmail = document.querySelector('.navbar-email');
 const desktopMenu = document.querySelector('.desktop-menu');
 const menuCarritoIcon = document.querySelector('.navbar-shopping-cart');
+const productDetailCloseIcon = document.querySelector('.product-detail-close');
 const menuBurgerIcon = document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 const shoppingCardContainer = document.querySelector('#shopping-cart-container');
+const productDetailContainer = document.querySelector('.product-detail');
+
 // const shoppingCardContainer = document.querySelector('.product-detail');
 const cardsContainer = document.querySelector('.cards-container');
 
 menuEmail.addEventListener('click',toggleDesktopMenu);
 menuBurgerIcon.addEventListener('click',toggleMobileMenu);
 menuCarritoIcon.addEventListener('click',toggleCarritoshoppingCardContainer);
+productDetailCloseIcon.addEventListener('click',closeProductDetailAside);
 
 function toggleDesktopMenu() {
     const isshoppingCardContainerClosed = shoppingCardContainer.classList.contains('inactive');
@@ -28,6 +32,7 @@ function toggleMobileMenu() {
         shoppingCardContainer.classList.add('inactive');
         
     }
+    closeProductDetailAside();
     mobileMenu.classList.toggle('inactive');
 }
 
@@ -38,7 +43,21 @@ function toggleCarritoshoppingCardContainer() {
         mobileMenu.classList.add('inactive');
         
     }
+    const isProductDetailClosed = productDetailContainer.classList.contains('inactive');
+    
+    if (!isProductDetailClosed) {
+        productDetailContainer.classList.add('inactive');
+        
+    }
     shoppingCardContainer.classList.toggle('inactive');
+}
+function openProductDetailAside() {
+    shoppingCardContainer.classList.add('inactive');
+    productDetailContainer.classList.remove('inactive');
+}
+
+function closeProductDetailAside() {
+    productDetailContainer.classList.add('inactive');
 }
 
 const productList = [];
@@ -77,6 +96,7 @@ productList.push({
         
             const productImg = document.createElement('img');
             productImg.setAttribute('src', product.image);
+
             // product = {name, price, image} -> product.image
             const productInfo = document.createElement('div');
             productInfo.classList.add('product-info');
@@ -93,6 +113,9 @@ productList.push({
             const productInfoFigure = document.createElement('figure');
             const productImgCart  = document.createElement('img');
             productImgCart.setAttribute('src', './icons/bt_add_to_cart.svg');
+            productImg.addEventListener('click', openProductDetailAside);
+
+           
             productInfoFigure.appendChild(productImgCart);
         
             productInfo.appendChild(productInfoDiv);
